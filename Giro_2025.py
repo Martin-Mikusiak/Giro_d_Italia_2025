@@ -23,7 +23,10 @@ print(f"Total number of the riders: {df.shape[0]}")  # Result: 184
 print(f"Average age of all riders: {df['Age'].mean().round(2)}")  # Result: 28.17
 
 df["Age"].median()  # Result: 28
+df[df["Age"].eq(df["Age"].median())]
+
 df["Age"].mode()    # Result: 28
+df[df["Age"].isin(df["Age"].mode())].sort_values(by=["Age", "Nr"])
 
 
 # 3. Number of riders by Nationality
@@ -75,8 +78,13 @@ df_gr3a.plot(kind="bar", x="Age", y="Count_of_Riders", ylim=(0, 25), title="Giro
 df_ldr = df[df["Nr"].isin(range(1, int(df.shape[0] / 8 * 10), 10))].sort_values(by="Nr").reset_index(drop=True)
 df_ldr
 
+df_ldr["Age"].mean().round(2)   # Result: 28.96
+
 df_ldr["Age"].median()  # Result: 30
+df_ldr[df_ldr["Age"].eq(df_ldr["Age"].median())]
+
 df_ldr["Age"].mode()    # Result: [30, 35]
+df_ldr[df_ldr["Age"].isin(df_ldr["Age"].mode())].sort_values(by=["Age", "Nr"])
 
 df_ldr = df_ldr.merge(df_teams, on="Team")
 df_ldr = df_ldr.assign(Nr_Name_Code = df_ldr["Nr"].astype(str) + " " + df_ldr["Name"] + " (" + df_ldr["Code"] + ")")
